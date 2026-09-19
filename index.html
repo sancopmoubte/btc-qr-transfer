@@ -25,7 +25,6 @@
     <button class="tab-btn active" onclick="showTab('identity',this)">身份</button>
     <button class="tab-btn" onclick="showTab('transfer',this)">发起转账</button>
     <button class="tab-btn" onclick="showTab('receive',this)">扫码接收</button>
-    <button class="tab-btn" onclick="showTab('mining',this)">挖矿/提现</button>
   </nav>
 
   <section id="identity" class="tab-content active card">
@@ -56,9 +55,6 @@
     <div id="receive-status" class="status"></div>
   </section>
 
-  <section id="mining" class="tab-content card">
-    <h2>挖矿与提现</h2><div class="alert alert-info">每 2 秒可点击一次，生成 1.00 离线代币。</div><button id="mining-btn" class="green-btn" onclick="mineToken()">点击挖矿（每 2 秒）</button><hr class="hr"><button class="danger-btn" onclick="withdraw()">提现显示手机号</button>
-  </section>
 </div>
 
 <script>
@@ -77,8 +73,6 @@
   function showTab(id,btn){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active')}
   function copyText(id){const el=document.getElementById(id),text=el.value||el.innerText;navigator.clipboard?.writeText(text).then(()=>alert('已复制'))}
   function setStatus(id,msg,type){document.getElementById(id).innerHTML=`<div class="alert alert-${type==='success'?'success':'error'}">${msg}</div>`}
-  function mineToken(){const now=Date.now();if(window.lastMine&&now-window.lastMine<2000)return alert('挖矿太频繁了，请等待 2 秒。');window.lastMine=now;state.balance+=1;saveState();updateUI();const btn=document.getElementById('mining-btn');btn.disabled=true;let count=2;btn.innerText=`冷却中（${count}s）`;const timer=setInterval(()=>{count--;if(count<=0){clearInterval(timer);btn.disabled=false;btn.innerText='点击挖矿（每 2 秒）'}else btn.innerText=`冷却中（${count}s）`},1000)}
-  function withdraw(){alert('提现请求已提交！\n联系客服手机号：15932447705')}
   function bufferToBase64(buf){return btoa(String.fromCharCode(...new Uint8Array(buf)))}function base64ToBuffer(base64){const bin=atob(base64),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return bytes.buffer}async function importPublicKey(base64){return crypto.subtle.importKey('raw',base64ToBuffer(base64),{name:'ECDSA',namedCurve:'P-256'},true,['verify'])}async function importPrivateKey(base64){return crypto.subtle.importKey('pkcs8',base64ToBuffer(base64),{name:'ECDSA',namedCurve:'P-256'},true,['sign'])}
   init();
 </script>
