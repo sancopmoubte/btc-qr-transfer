@@ -51,7 +51,7 @@
 
   <section id="receive" class="tab-content card">
     <h2>扫码验证并接收</h2>
-    <div class="scanner"><p style="margin:0 0 8px;font-weight:750">上传收到的二维码图片</p><label class="file-label">选择二维码图片<input id="qr-file" type="file" accept="image/*" onchange="scanImage(event)" oninput="scanImage(event)"></label><div id="scan-status" class="status"></div></div>
+    <div class="scanner"><p style="margin:0 0 8px;font-weight:750">上传收到的二维码图片</p><label class="file-label">选择二维码图片<input id="qr-file" type="file" accept="image/*" onchange="scanImage(event)" oninput="scanImage(event)"></label><canvas id="scan-canvas" hidden></canvas><div id="scan-status" class="status"></div></div>
     <details class="manual"><summary>备用：手动粘贴旧版凭证（兼容原网页）</summary><textarea id="voucher-input" rows="4" placeholder="仅在无法使用二维码时粘贴 Base64 凭证"></textarea><button class="secondary-btn" onclick="processReceiveVoucher()">验证并接收</button></details>
     <div id="receive-status" class="status"></div>
   </section>
